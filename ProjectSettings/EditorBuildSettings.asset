@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StarterScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Carrot-Level.unity
+    guid: c98fdb73d6e8044ae89cbc728ce1c0be
   m_configObjects: {}
