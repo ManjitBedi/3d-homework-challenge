@@ -1,0 +1,45 @@
+{
+    "name": "Game Inputs",
+    "maps": [
+        {
+            "name": "Mouse",
+            "id": "c382518c-0ffa-46c4-a8a3-e240c502e72a",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "bf11b40b-e06b-4bb2-8b9d-989f881b5c72",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "34b3f03a-42f8-449e-8150-c8466911c7c4",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b8417808-b191-4ac9-9706-7d4f7a386568",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

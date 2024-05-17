@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CarrotGameObject : MonoBehaviour
 {
@@ -14,5 +13,17 @@ public class CarrotGameObject : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void AnimateRemove()
+    {
+        var position = gameObject.transform.position;  
+       gameObject.transform.DOMove(new Vector3(position.x, 20, position.z), 3)
+            .onComplete = Destroy;
+    }
+
+    private void Destroy() 
+    {
+        Destroy(gameObject);
     }
 }

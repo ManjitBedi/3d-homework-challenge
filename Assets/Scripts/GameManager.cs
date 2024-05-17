@@ -1,5 +1,9 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+/// <summary>
+/// The Game Manager class to deal with state & spawn game objects
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
@@ -11,6 +15,19 @@ public class GameManager : MonoBehaviour
     // state info
     CarrotGameObject[] spawnedObjects;
 
+    [SerializeField]
+    private Camera gameCamera; 
+
+    Ray lastRay;
+
+    public CarrotGameObject selectedCarrot;
+
+    bool isDragging = false;
+
+    void Awake() 
+    {
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +35,13 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   void Update()
+   {
+    
+   }   
+
+ 
+
 
     void SetupGameScene() 
     {
@@ -30,7 +50,10 @@ public class GameManager : MonoBehaviour
         for(int i = 0; i < spawnPoints.Length; i++)
         {
             var position = spawnPoints[i].transform.position;
-            spawnedObjects[i] = Object.Instantiate(carrotPrefab, position, Quaternion.identity);
+            var newCarrotGameObject = Instantiate(carrotPrefab, position, Quaternion.identity);
+            spawnedObjects[i] = newCarrotGameObject;
+            // Important set the game manager property on the spawned carrrot.
+            newCarrotGameObject.GetComponent<DragAndDrop>().gameManager = this;  
         }
     }
 }
