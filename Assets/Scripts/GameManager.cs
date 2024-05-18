@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections;
 // for animation
-using DG.Tweening;
-using PrimeTweenDemo;
+using PrimeTween;
 
 /// <summary>
 /// The Game Manager class to deal with state & spawn game objects
@@ -59,17 +58,17 @@ public class GameManager : MonoBehaviour
 
     private void SpawnCarrot(int index)
     {
-            // Position game object at spawn point.
-            var position = spawnPoints[index].transform.position;
-            var newCarrotGameObject =  Instantiate(carrotPrefab, position, Quaternion.identity);
-            spawnedObjects[index] = newCarrotGameObject;
-            // Important set the game manager property on the spawned carrot.
-            // TODO: use closures perhaps?
-            newCarrotGameObject.GetComponent<DragAndDrop>().gameManager = this;  
-            newCarrotGameObject.GetComponent<CarrotGameObject>().gameManager = this;  
+        // Position game object at spawn point.
+        var position = spawnPoints[index].transform.position;
+        var newCarrotGameObject =  Instantiate(carrotPrefab, position, Quaternion.identity);
+        spawnedObjects[index] = newCarrotGameObject;
+        // Important set the game manager property on the spawned carrot.
+        // TODO: use closures perhaps?
+        newCarrotGameObject.GetComponent<DragAndDrop>().gameManager = this;  
+        newCarrotGameObject.GetComponent<CarrotGameObject>().gameManager = this;  
 
-            // Play audio for growing...
-            audioManager.PlayAudio(GameAudio.Grow);
+        // Play audio for growing...
+        audioManager.PlayAudio(GameAudio.Grow);
     }
 
     public void RemoveCarrotFromScene(CarrotGameObject carrotGameObject, bool spawnNewCarrot = true) 

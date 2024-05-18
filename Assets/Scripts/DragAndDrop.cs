@@ -55,6 +55,8 @@ public class DragAndDrop : MonoBehaviour
 
           startTime = Time.time;
           startPos = Input.mousePosition;
+
+          carrotGameObject.ActivateTrail();
      }
 
 
