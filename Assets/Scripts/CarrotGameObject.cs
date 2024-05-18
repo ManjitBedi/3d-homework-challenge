@@ -2,6 +2,10 @@ using UnityEngine;
 // for animation
 using DG.Tweening;
 using UnityEngine.SocialPlatforms.Impl;
+
+/// <summary>
+/// This glass deals with the audio & visual aspect of the carrot game object.
+/// </summary>
 public class CarrotGameObject : MonoBehaviour
 {
     [SerializeField]
@@ -87,12 +91,27 @@ public class CarrotGameObject : MonoBehaviour
 
         gameObject.transform.DOMove(new Vector3(position.x, 20, position.z), 3)
             .onComplete = MovementFinished;
-
     }
 
     private void MovementFinished()
     {
         gameManager.RemoveCarrotFromScene(this);
+
+        if (animateLeaves)
+        {
+            DropLeaves();
+        }
+    }
+
+    // Animate leaves fall down
+    void DropLeaves()
+    {
+        foreach(GameObject leaf in leaves)
+        {
+            // remove leaf from parent
+
+            // animate leaf falling
+        }
     }
 
     public void ActivateTrail() 

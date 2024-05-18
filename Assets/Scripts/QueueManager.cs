@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Got this code from the internet.
+/// Have a need to queue coroutines to go one after another to create animation sequences.
+/// </summary>
 public class QueueManager : MonoBehaviour
 {
 	private readonly Queue<IEnumerator> _coroutineQueue = new Queue<IEnumerator>();

@@ -11,6 +11,9 @@ public enum GameAudio
     Grow
 }
 
+/// <summary>
+/// Audio manager to deal with most of the audio in the level.
+/// </summary>
 public class AudioManager : MonoBehaviour
 {
     [SerializeField]
@@ -24,18 +27,6 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField]
     AudioSource rocketAudioSource;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void PlayAudio(GameAudio gameAudio)
     {

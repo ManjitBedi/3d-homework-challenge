@@ -20,8 +20,7 @@
 - spawn carrots one by one
   - got some code from online which will queue coroutines.
 
-- 
-
+- using multiple sequences to animate each carrot
 
 ### Cinemachine
 
