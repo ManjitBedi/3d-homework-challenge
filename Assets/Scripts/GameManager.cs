@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnCarrot(int index)
     {
+            // Position game object at spawn point.
             var position = spawnPoints[index].transform.position;
             var newCarrotGameObject = Instantiate(carrotPrefab, position, Quaternion.identity);
             spawnedObjects[index] = newCarrotGameObject;
@@ -57,6 +58,9 @@ public class GameManager : MonoBehaviour
             // TODO: use closures perhaps?
             newCarrotGameObject.GetComponent<DragAndDrop>().gameManager = this;  
             newCarrotGameObject.GetComponent<CarrotGameObject>().gameManager = this;  
+
+            // Play audio for growing...
+            audioManager.PlayAudio(GameAudio.Grow);
     }
 
     public void RemoveCarrotFromScene(CarrotGameObject carrotGameObject, bool spawnNewCarrot = true) 
@@ -85,7 +89,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator SpawnCarrotAfterDelay(float delay, int index)
     {
         yield return new WaitForSeconds(delay);
-        Debug.Log("spawn a new carrot game objects");
+        Debug.Log("spawn a new carrot game object");
         SpawnCarrot(index);
     }
 
