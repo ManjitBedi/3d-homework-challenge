@@ -9,8 +9,7 @@ public class CarrotGameObject : MonoBehaviour
 
     public GameManager gameManager;
 
-    [SerializeField]
-    ShakeTransformS shake;
+    bool useDOTween = true;
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +27,17 @@ public class CarrotGameObject : MonoBehaviour
     void StartGrowAnimationSequence()
     {
         // Note: the trail renderer needs to be disabaled for this to work!
-        PrimeTween.Tween.Scale(transform, new Vector3(1.15f, 0.9f, 1.15f), 0.1f, PrimeTween.Ease.OutSine, 5, CycleMode.Yoyo).OnComplete(transform, _transform => {
-            Debug.Log("animation completed");
-        }, warnIfTargetDestroyed: false);
 
+        if (useDOTween)
+        {
+            transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 2, 10, 1f);
+        }
+        else
+        {
+            PrimeTween.Tween.Scale(transform, new Vector3(1.15f, 0.9f, 1.15f), 0.1f, PrimeTween.Ease.OutSine, 5, CycleMode.Yoyo).OnComplete(transform, _transform => {
+                Debug.Log("animation completed");
+            }, warnIfTargetDestroyed: false);
+        }
     }
 
     public void AnimateRemove()
