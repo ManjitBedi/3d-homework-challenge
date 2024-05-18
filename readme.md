@@ -20,6 +20,7 @@
 - spawn carrots one by one
   - got some code from online which will queue coroutines.
 
+- 
 
 
 ### Cinemachine
@@ -35,7 +36,7 @@ I may not have time to implement this.
 
 - I experienced a confounding issue when doing animation; the game object would get deleted.
  - it turns out you cannot have a trail renderer active when performing scaling animations using DOTween or other systems; I don't know if this is a bug in Unity or they way it works
- - the solution is to set the emitter to turned off until used:
+ - the solution is to set the emitter to turned off until needed:
 
  ```
 gameObject.GetComponent<TrailRenderer>().emitting = false;

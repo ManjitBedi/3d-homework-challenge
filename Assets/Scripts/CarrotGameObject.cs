@@ -1,15 +1,15 @@
 using UnityEngine;
 // for animation
-using PrimeTween;
 using DG.Tweening;
 public class CarrotGameObject : MonoBehaviour
 {
-     [SerializeField]
-     AudioSource growAudioSource;
+    [SerializeField]
+    AudioSource riseAudioSource;
+
+    [SerializeField]
+    AudioSource growAudioSource;
 
     public GameManager gameManager;
-
-    bool useDOTween = true;
 
     // Start is called before the first frame update
     void Start()
@@ -26,18 +26,18 @@ public class CarrotGameObject : MonoBehaviour
 
     void StartGrowAnimationSequence()
     {
+        riseAudioSource.Play();
         // Note: the trail renderer needs to be disabaled for this to work!
+        var position = gameObject.transform.position;
+        gameObject.transform.position = new Vector3(position.x, position.y - 0.1f, position.z);
+         gameObject.transform.DOMove(new Vector3(position.x, position.y, position.z), 0.5f)
+            .onComplete = StartAnimationSequence2;
+    }
 
-        if (useDOTween)
-        {
-            transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 2, 10, 1f);
-        }
-        else
-        {
-            PrimeTween.Tween.Scale(transform, new Vector3(1.15f, 0.9f, 1.15f), 0.1f, PrimeTween.Ease.OutSine, 5, CycleMode.Yoyo).OnComplete(transform, _transform => {
-                Debug.Log("animation completed");
-            }, warnIfTargetDestroyed: false);
-        }
+    void StartAnimationSequence2() 
+    {
+        growAudioSource.Play();
+        transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 2, 10, 1f);
     }
 
     public void AnimateRemove()
@@ -47,14 +47,9 @@ public class CarrotGameObject : MonoBehaviour
         gameManager.PlayAudio(GameAudio.Rocket);
         var position = gameObject.transform.position;
 
-        if (useDOTween){
-            gameObject.transform.DOMove(new Vector3(position.x, 20, position.z), 3)
-                .onComplete = MovementFinished;
-        }
-        else
-        {
-            PrimeTween.Tween.Position(transform, new Vector3(position.x, 20, position.z), duration: 1, ease: PrimeTween.Ease.InOutSine);
-        }
+        gameObject.transform.DOMove(new Vector3(position.x, 20, position.z), 3)
+            .onComplete = MovementFinished;
+
     }
 
     private void MovementFinished()
