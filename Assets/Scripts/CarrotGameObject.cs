@@ -1,6 +1,7 @@
 using UnityEngine;
 // for animation
 using DG.Tweening;
+using UnityEngine.SocialPlatforms.Impl;
 public class CarrotGameObject : MonoBehaviour
 {
     [SerializeField]
@@ -8,6 +9,15 @@ public class CarrotGameObject : MonoBehaviour
 
     [SerializeField]
     AudioSource growAudioSource;
+
+    [SerializeField]
+    GameObject [] leaves;
+
+    [SerializeField]
+    bool animateLeaves = false;
+
+    [SerializeField]
+    float growDuration = 2.0f;
 
     public GameManager gameManager;
 
@@ -32,12 +42,40 @@ public class CarrotGameObject : MonoBehaviour
         gameObject.transform.position = new Vector3(position.x, position.y - 0.1f, position.z);
          gameObject.transform.DOMove(new Vector3(position.x, position.y, position.z), 0.5f)
             .onComplete = StartAnimationSequence2;
+
+        if (animateLeaves)
+        {
+            HideLeaves();
+        }
+    }
+
+    void HideLeaves()
+    {
+        foreach(GameObject leaf in leaves)
+        {
+            leaf.SetActive(false);
+        }
     }
 
     void StartAnimationSequence2() 
     {
         growAudioSource.Play();
-        transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 2, 10, 1f);
+        transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), growDuration, 10, 1f);
+
+        if (animateLeaves)
+        {
+            GrowLeaves();
+        }
+    }
+
+    void GrowLeaves()
+    {
+        foreach(GameObject leaf in leaves)
+        {
+            leaf.SetActive(true);
+            leaf.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            leaf.transform.DOScale(new Vector3(1.0f, 1.0f, 1.0f), growDuration);
+        }
     }
 
     public void AnimateRemove()
