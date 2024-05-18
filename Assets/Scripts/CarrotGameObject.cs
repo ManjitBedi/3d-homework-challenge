@@ -5,7 +5,7 @@ using DG.Tweening;
 public class CarrotGameObject : MonoBehaviour
 {
      [SerializeField]
-     AudioSource popAudioSource;
+     AudioSource growAudioSource;
 
     public GameManager gameManager;
 

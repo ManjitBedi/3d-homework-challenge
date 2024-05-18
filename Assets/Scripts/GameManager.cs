@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
-// for animation
-using PrimeTween;
+
 
 /// <summary>
 /// The Game Manager class to deal with state & spawn game objects
@@ -26,49 +25,43 @@ public class GameManager : MonoBehaviour
 
     public CarrotGameObject selectedCarrot;
 
+    private   QueueManager methodQueue; 
+    
 
     // Start is called before the first frame update
     void Start()
     {
+        methodQueue = gameObject.AddComponent<QueueManager>();
         SetupGameScene();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }   
-
-    void OnDestroy()
-    {
-        Debug.Log("OnDestroy game object");
-    }
-
  
     void SetupGameScene() 
     {
         spawnedObjects = new CarrotGameObject[spawnPoints.Length];
-
-        for(int i = 0; i < spawnPoints.Length; i++)
+        for(int index = 0; index < spawnPoints.Length; index++)
         {
-            SpawnCarrot(i);
+            methodQueue.AddToQueue(SpawnCarrotAfterDelay(0.5f, index));
         }
     }
+    
+    // use a coroutine to add a delay
+    private IEnumerator SpawnCarrotAfterDelay(float delay, int index)
+    {
+        yield return new WaitForSeconds(delay);
+        SpawnCarrot(index);
+    }
 
-
+    // Spawn a carrot game object from a prefab
     private void SpawnCarrot(int index)
     {
         // Position game object at spawn point.
         var position = spawnPoints[index].transform.position;
-        var newCarrotGameObject =  Instantiate(carrotPrefab, position, Quaternion.identity);
+        var newCarrotGameObject = Instantiate(carrotPrefab, position, Quaternion.identity);
         spawnedObjects[index] = newCarrotGameObject;
         // Important set the game manager property on the spawned carrot.
         // TODO: use closures perhaps?
         newCarrotGameObject.GetComponent<DragAndDrop>().gameManager = this;  
-        newCarrotGameObject.GetComponent<CarrotGameObject>().gameManager = this;  
-
-        // Play audio for growing...
-        audioManager.PlayAudio(GameAudio.Grow);
+        newCarrotGameObject.GetComponent<CarrotGameObject>().gameManager = this;
     }
 
     public void RemoveCarrotFromScene(CarrotGameObject carrotGameObject, bool spawnNewCarrot = true) 
@@ -94,13 +87,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    // Coroutine method that waits for the delay, then performs the action
-    private IEnumerator SpawnCarrotAfterDelay(float delay, int index)
-    {
-        yield return new WaitForSeconds(delay);
-        Debug.Log("spawn a new carrot game object");
-        SpawnCarrot(index);
-    }
+ 
 
     // Audio handling
     public void PlayAudio(GameAudio gameAudio) 

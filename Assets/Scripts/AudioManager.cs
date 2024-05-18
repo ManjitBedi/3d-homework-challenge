@@ -39,7 +39,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlayAudio(GameAudio gameAudio)
     {
-        Debug.Log($"play audio {gameAudio}");
         switch (gameAudio)
         {
             case GameAudio.Pop:
