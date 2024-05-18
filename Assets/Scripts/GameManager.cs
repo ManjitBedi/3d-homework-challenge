@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 /// <summary>
 /// The Game Manager class to deal with state & spawn game objects
@@ -12,9 +13,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject[] spawnPoints;
 
+    [SerializeField]
+    AudioManager audioManager;
+
     // Collection of carrots in the scene.
     // TODO: there are not so many game objects if there were, use object pooling.
-        CarrotGameObject[] spawnedObjects;
+    CarrotGameObject[] spawnedObjects;
 
     [SerializeField]
     private Camera gameCamera; 
@@ -64,6 +68,7 @@ public class GameManager : MonoBehaviour
             var spawnedObject = spawnedObjects[i];
             if (carrotGameObject  == spawnedObject) 
             {
+                selectedCarrot = null;
                 spawnedObjects[i] = null;
                 Destroy(carrotGameObject.gameObject);
                 if (spawnNewCarrot)
@@ -82,5 +87,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         Debug.Log("spawn a new carrot game objects");
         SpawnCarrot(index);
+    }
+
+    // Audio handling
+    public void PlayAudio(GameAudio gameAudio) 
+    {
+        audioManager.PlayAudio(gameAudio);
     }
 }

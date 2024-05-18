@@ -25,23 +25,28 @@ public class DragAndDrop : MonoBehaviour
           return Camera.main.WorldToScreenPoint(transform.position);
     }
 
+
+     // Mouse pointer ray cast has deteted a carrot game object.
+     // Pick it out of the ground.
      private void OnMouseDown() 
      {
           mousePosition = Input.mousePosition - GetMousePos();
-          gameManager.selectedCarrot = gameObject.GetComponent<CarrotGameObject>();
+          gameManager.selectedCarrot = carrotGameObject;
+          carrotGameObject.Grabbed();
      }
 
+
+     // Update the position of the selected carrot - move it with the mouse.
      private void OnMouseDrag()
      {
           // Need to adjust the mouse position to use in world space.
           transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
-          gameManager.selectedCarrot = null;
+          
      }
 
-
+     // The carrot has been released, play an animation.
      private void  OnMouseUp() 
      {          
-          
           carrotGameObject.AnimateRemove();
      }
 }
