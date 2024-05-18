@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
+// for animation
+using DG.Tweening;
+using PrimeTweenDemo;
 
 /// <summary>
 /// The Game Manager class to deal with state & spawn game objects
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     public CarrotGameObject selectedCarrot;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +40,11 @@ public class GameManager : MonoBehaviour
         
     }   
 
+    void OnDestroy()
+    {
+        Debug.Log("OnDestroy game object");
+    }
+
  
     void SetupGameScene() 
     {
@@ -48,11 +56,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     private void SpawnCarrot(int index)
     {
             // Position game object at spawn point.
             var position = spawnPoints[index].transform.position;
-            var newCarrotGameObject = Instantiate(carrotPrefab, position, Quaternion.identity);
+            var newCarrotGameObject =  Instantiate(carrotPrefab, position, Quaternion.identity);
             spawnedObjects[index] = newCarrotGameObject;
             // Important set the game manager property on the spawned carrot.
             // TODO: use closures perhaps?
@@ -72,6 +81,7 @@ public class GameManager : MonoBehaviour
             var spawnedObject = spawnedObjects[i];
             if (carrotGameObject  == spawnedObject) 
             {
+                Debug.Log("destroying carrot instance.");
                 selectedCarrot = null;
                 spawnedObjects[i] = null;
                 Destroy(carrotGameObject.gameObject);

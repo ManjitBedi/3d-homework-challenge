@@ -66,7 +66,7 @@ public class DragAndDrop : MonoBehaviour
      }
 
      // The carrot has been released, play an animation.
-     private void  OnMouseUp() 
+     private void OnMouseUp() 
      {          
           endTime = Time.time;
           endPos = Input.mousePosition;
@@ -78,7 +78,7 @@ public class DragAndDrop : MonoBehaviour
                //throw the game object
                CalSpeed();
                CalAngle();
-               rb.AddForce(new Vector3((angle.x * objectSpeed), (angle.y * objectSpeed / 3), (angle.z * objectSpeed) * 2));
+               rb.AddForce(new Vector3(angle.x * objectSpeed, angle.y * objectSpeed / 3, angle.z * objectSpeed * 2));
                rb.useGravity = true;
                holding = false;
                thrown = true;
@@ -93,7 +93,7 @@ public class DragAndDrop : MonoBehaviour
 
      private void CalAngle()
      {
-          angle = Camera.main.ScreenToWorldPoint(new Vector3(endPos.x, endPos.y + 50f, (Camera.main.nearClipPlane + 5)));
+          angle = Camera.main.ScreenToWorldPoint(new Vector3(endPos.x, endPos.y + 50f, Camera.main.nearClipPlane + 5));
      }
 
     void CalSpeed()
