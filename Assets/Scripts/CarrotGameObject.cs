@@ -1,7 +1,7 @@
 using UnityEngine;
+
 // for animation
 using DG.Tweening;
-using UnityEngine.SocialPlatforms.Impl;
 
 /// <summary>
 /// This glass deals with the audio & visual aspect of the carrot game object.
@@ -18,10 +18,16 @@ public class CarrotGameObject : MonoBehaviour
     GameObject [] leaves;
 
     [SerializeField]
+    GameObject smokeVFX;
+
+    [SerializeField]
     bool animateLeaves = false;
 
     [SerializeField]
     float growDuration = 2.0f;
+
+    [SerializeField]
+    float verticalDistance = 3.0f;
 
     public GameManager gameManager;
 
@@ -89,14 +95,16 @@ public class CarrotGameObject : MonoBehaviour
         gameManager.PlayAudio(GameAudio.Rocket);
         var position = gameObject.transform.position;
 
-        gameObject.transform.DOMove(new Vector3(position.x, 20, position.z), 3)
+        gameObject.transform.DOMove(new Vector3(position.x, verticalDistance, position.z), 1.5f)
             .onComplete = MovementFinished;
     }
 
     private void MovementFinished()
     {
-        gameManager.RemoveCarrotFromScene(this);
+        smokeVFX.SetActive(true);
+        smokeVFX.transform.parent = null;
 
+        gameManager.RemoveCarrotFromScene(this);
         if (animateLeaves)
         {
             DropLeaves();
@@ -109,8 +117,17 @@ public class CarrotGameObject : MonoBehaviour
         foreach(GameObject leaf in leaves)
         {
             // remove leaf from parent
+            leaf.transform.parent = null;
+            var position = leaf.transform.position;
 
+            position.x += Random.Range(-3f, 3f);
+            position.z += Random.Range(-3f, 3f);
             // animate leaf falling
+            Sequence s = DOTween.Sequence();
+            s.Append(leaf.transform.DOMove(new Vector3(position.x, -verticalDistance, position.z), 12));
+            var angle = 90f;
+            var rotation = new Vector3(Random.Range(-angle, angle), Random.Range(-angle, angle), Random.Range(-angle, angle));
+            s.Join(leaf.transform.DORotate(rotation, 12));
         }
     }
 

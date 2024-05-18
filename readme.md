@@ -22,6 +22,10 @@
 
 - using multiple sequences to animate each carrot
 
+## animating leaves
+- when the carrot fly upwards, have the leaves detach & fall back to earth
+- TODO: have the leaves not pass through the ground
+
 ### Cinemachine
 
 I may not have time to implement this.
