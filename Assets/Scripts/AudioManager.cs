@@ -8,7 +8,9 @@ public enum GameAudio
     Pop,
     Throw,
     Rocket,
-    Grow
+    Grow,
+
+    Poof
 }
 
 /// <summary>
@@ -28,6 +30,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     AudioSource rocketAudioSource;
 
+    [SerializeField]
+    AudioSource poofAudioSource;
+
     public void PlayAudio(GameAudio gameAudio)
     {
         switch (gameAudio)
@@ -43,6 +48,10 @@ public class AudioManager : MonoBehaviour
                 break;
             case GameAudio.Grow:
                 growingAudioSource.Play();
+                break;
+
+            case GameAudio.Poof:
+                poofAudioSource.Play();
                 break;
         }
     } 

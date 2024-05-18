@@ -1,14 +1,8 @@
 {
   "dependencies": {
-    "com.kyrylokuzyk.primetween": {
-      "version": "file:../Assets/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
-      "depth": 0,
-      "source": "local-tarball",
-      "dependencies": {}
-    },
     "com.unity.burst": {
-      "version": "1.8.13",
-      "depth": 1,
+      "version": "1.8.15",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",

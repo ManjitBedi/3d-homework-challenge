@@ -27,7 +27,7 @@ public class CarrotGameObject : MonoBehaviour
     float growDuration = 2.0f;
 
     [SerializeField]
-    float verticalDistance = 3.0f;
+    float height = 2.5f;
 
     public GameManager gameManager;
 
@@ -95,7 +95,7 @@ public class CarrotGameObject : MonoBehaviour
         gameManager.PlayAudio(GameAudio.Rocket);
         var position = gameObject.transform.position;
 
-        gameObject.transform.DOMove(new Vector3(position.x, verticalDistance, position.z), 1.5f)
+        gameObject.transform.DOMove(new Vector3(position.x, position.y + height, position.z), 1.1f)
             .onComplete = MovementFinished;
     }
 
@@ -103,7 +103,7 @@ public class CarrotGameObject : MonoBehaviour
     {
         smokeVFX.SetActive(true);
         smokeVFX.transform.parent = null;
-
+        gameManager.PlayAudio(GameAudio.Poof);
         gameManager.RemoveCarrotFromScene(this);
         if (animateLeaves)
         {
@@ -124,7 +124,7 @@ public class CarrotGameObject : MonoBehaviour
             position.z += Random.Range(-3f, 3f);
             // animate leaf falling
             Sequence s = DOTween.Sequence();
-            s.Append(leaf.transform.DOMove(new Vector3(position.x, -verticalDistance, position.z), 12));
+            s.Append(leaf.transform.DOMove(new Vector3(position.x, -height, position.z), 12));
             var angle = 90f;
             var rotation = new Vector3(Random.Range(-angle, angle), Random.Range(-angle, angle), Random.Range(-angle, angle));
             s.Join(leaf.transform.DORotate(rotation, 12));
