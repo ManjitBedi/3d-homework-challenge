@@ -3,6 +3,8 @@ using DG.Tweening;
 
 public class CarrotGameObject : MonoBehaviour
 {
+    public GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,6 @@ public class CarrotGameObject : MonoBehaviour
 
     private void Destroy() 
     {
-        Destroy(gameObject);
+       gameManager.RemoveCarrotFromScene(this);
     }
 }

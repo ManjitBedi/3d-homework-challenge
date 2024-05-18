@@ -1,8 +1,12 @@
 using UnityEngine;
 
 /// <summary>
-/// Class to drag & drop the selected game object using the old input system
+/// Class to drag & drop (release) the selected game object using the old input system.
+/// When the object is released, play an animation sequence.
 /// </summary>
+
+// TODO: implement this using the newer input system
+
 public class DragAndDrop : MonoBehaviour
 {
     Vector3 mousePosition;
@@ -13,31 +17,32 @@ public class DragAndDrop : MonoBehaviour
 
     private void Start()
     {
-        carrotGameObject = gameObject.GetComponent<CarrotGameObject>();
+          carrotGameObject = gameObject.GetComponent<CarrotGameObject>();
     }
 
     private Vector3 GetMousePos() 
     {
-        return Camera.main.WorldToScreenPoint(transform.position);
+          return Camera.main.WorldToScreenPoint(transform.position);
     }
 
-    // TODO: implement this using the newer input system
+     private void OnMouseDown() 
+     {
+          mousePosition = Input.mousePosition - GetMousePos();
+          gameManager.selectedCarrot = gameObject.GetComponent<CarrotGameObject>();
+     }
 
-    private void OnMouseDown() 
-   {
-        mousePosition = Input.mousePosition - GetMousePos();
-        gameManager.selectedCarrot = gameObject.GetComponent<CarrotGameObject>();
-   }
+     private void OnMouseDrag()
+     {
+          // Need to adjust the mouse position to use in world space.
+          transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
+          gameManager.selectedCarrot = null;
+     }
 
-   private void OnMouseDrag()
-   {
-        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
-        gameManager.selectedCarrot = null;
-   }
 
-   private void  OnMouseUp() {
-        Debug.Log("carrot released - Do something");
-        carrotGameObject.AnimateRemove();
-   }
+     private void  OnMouseUp() 
+     {          
+          
+          carrotGameObject.AnimateRemove();
+     }
 }
 
