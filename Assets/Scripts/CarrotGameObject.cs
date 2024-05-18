@@ -45,21 +45,25 @@ public class CarrotGameObject : MonoBehaviour
         Debug.Log("Animate object to go off screen");
         // audio
         gameManager.PlayAudio(GameAudio.Rocket);
-
-        // animation
         var position = gameObject.transform.position;
-        PrimeTween.Tween.Position(transform, new Vector3(position.x, 20, position.z), duration: 1, ease: PrimeTween.Ease.InOutSine);
+
+        if (useDOTween){
+            gameObject.transform.DOMove(new Vector3(position.x, 20, position.z), 3)
+                .onComplete = MovementFinished;
+        }
+        else
+        {
+            PrimeTween.Tween.Position(transform, new Vector3(position.x, 20, position.z), duration: 1, ease: PrimeTween.Ease.InOutSine);
+        }
     }
 
+    private void MovementFinished()
+    {
+        gameManager.RemoveCarrotFromScene(this);
+    }
 
     public void ActivateTrail() 
     {
         gameObject.GetComponent<TrailRenderer>().emitting = true;
-    }
-
-    private void Destroy() 
-    {
-        Debug.Log("destroy carrot game object");
-        gameManager.RemoveCarrotFromScene(this);
     }
 }
